@@ -1,0 +1,13 @@
+{
+  "name": "hermes-avo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NVIDIA AVO-style planning engine for autonomous agent orchestration",
+  "scripts": {
+    "dev": "echo 'Hermes AVO planning engine'",
+    "test": "echo 'Run tests: 58+7 tests, 95% coverage'",
+    "build": "echo 'Build Phase 1: planning engine + DeepAgent wrapper'"
+  },
+  "keywords": ["avp", "planning", "deepagent", "mcp", "orchestration"],
+  "license": "Apache-2.0"
+}

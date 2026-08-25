@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-avo"
+version = "0.1.0"
+description = "NVIDIA AVO-style planning engine with DeepAgent wrapper for autonomous agent orchestration."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+authors = [{ name = "PREM KUMAR", email = "premkumar@users.noreply.github.com" }]
+keywords = ["avp", "planning", "deepagent", "langgraph", "agent-orchestration"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "langgraph>=0.2.0",
+    "langchain-core>=0.3.0",
+    "openai>=1.40.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+dev = ["pytest>=8.0"]
+
+[project.urls]
+Homepage = "https://github.com/itsPremkumar/hermes-avo"
+Repository = "https://github.com/itsPremkumar/hermes-avo"
+
+# --- setuptools layout ------------------------------------------------------
+[tool.setuptools]
+packages = ["hermes_avo", "hermes_avo.core", "hermes_avo.planning",
+            "hermes_avo.agents", "hermes_avo.orchestrator"]
+
+# --- pytest -----------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-ra -q"

@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "hermes-avo"
+version = "2.0.0"
+description = "NVIDIA AVO-style planning engine for autonomous agent orchestration"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=4.1",
+]
+redis = [
+    "redis>=5.0",
+]
+http = [
+    "uvicorn>=0.29",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hermes_avo*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "hermes-avo"
+version = "0.1.0"
+description = "NVIDIA AVO-style planning engine for autonomous agent orchestration"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Nous Research" }]
+
+# ---- Test / lint tooling --------------------------------------------------
+# Kept intentionally lightweight: the project is offline-first and uses only
+# the standard-library + pytest for the test harness.
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-cov>=4"]
+
+# ---- pytest configuration --------------------------------------------------
+# Registers the custom category markers used throughout tests/ so that
+# ``PytestUnknownMarkWarning`` never appears, even if ``tests/conftest.py``
+# has not been imported yet.
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+markers = [
+    "planning: planning engine / task-decomposition tests",
+    "wrapper: DeepAgent / LLM-wrapper layer tests",
+    "coordination: multi-agent orchestration / handoff tests",
+    "e2e: end-to-end integration / smoke tests",
+]

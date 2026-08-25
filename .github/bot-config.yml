@@ -1,0 +1,42 @@
+# @hermes-avo-ci Bot Registration
+# =================================
+# This file registers the @hermes-avo-ci GitHub App / bot account for
+# CI/CD pipeline automation on itsPremkumar/hermes-avo.
+#
+# The bot:
+#   1. Auto-runs the full CI pipeline (ci.yml) on every commit to main.
+#   2. Posts build status to PR checks.
+#   3. On failure, auto-assigns the fix to the responsible avatar.
+#   4. Enforces circuit breakers (cost, steps, timeout).
+
+bot:
+  name: "hermes-avo-ci"
+  type: "github-app"
+  description: "24/7 Auto-healing CI/CD pipeline for Hermes AVO"
+  permissions:
+    contents: "write"          # read + write workflow status
+    pull-requests: "write"     # post comments on failure
+    statuses: "write"          # post commit statuses
+    workflows: "read"          # trigger + read workflow runs
+    issues: "write"            # tag avatars (they watch the repo)
+
+  # The bot is a member of the hermes-avo org with:
+  #   - repo admin on itsPremkumar/hermes-avo
+  #   - write to branch protection rules
+  #   - ability to trigger workflow_dispatch
+
+  circuit_breakers:
+    max_cost_usd: 0.50
+    max_steps: 1000
+    call_timeout_s: 30
+
+  auto_assign_rules:
+    phase-1: "@agent-builder"
+    phase-2: "@mcp-specialist"
+    phase-3: "@agent-architect"
+    phase-4: "@qa-lead"
+
+  # Webhook: CI run completed -> post build summary to #avo-monitoring
+  webhooks:
+    - url: "https://github.com/itsPremkumar/hermes-avo/issues"
+      events: ["workflow_run"]

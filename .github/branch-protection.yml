@@ -1,0 +1,39 @@
+# Branch Protection Rules for itsPremkumar/hermes-avo
+# =====================================================
+# Apply via GitHub UI or `gh api` — documented here for automation.
+#
+# @hermes-avo-ci bot auto-applies these on repo init.
+
+main:
+  # Require the full CI pipeline to pass before merge.
+  required_status_checks:
+    strict: true       # require branches to be up-to-date before merging
+    contexts:
+      - "Phase 1 — Planning Engine (@agent-builder)"
+      - "Phase 2 — MCP Bridge (@mcp-specialist)"
+      - "Phase 3 — AVOStudio (@agent-architect)"
+      - "Phase 4 — Integration Tests (@qa-lead)"
+      - "🔧 Auto-Assign Failure (@hermes-avo-ci bot)"
+
+  # Require linear history (no merge commits).
+  enforce_admins: false
+  required_linear_history: true
+
+  # Require PR reviews before merge.
+  required_pull_request_reviews:
+    required_approving_review_count: 1
+    dismiss_stale_reviews: true
+    require_code_owner_reviews: true
+
+  # Restrict who can push to main (only @hermes-avo-ci bot + designated maintainers).
+  restrictions:
+    users:
+      - "hermes-avo-ci"   # the auto-builder bot
+      - "PREM-KUMAR"      # repo owner
+  allow_force_pushes: false
+  allow_deletions: false
+
+  # Block merge if coverage drops below threshold.
+  # (Enforced in ci.yml via coverage gate jobs — this is the GitHub-native layer.)
+  required_signatures:
+    enabled: true
